@@ -28,6 +28,7 @@ window.setInterval(function(){
 function update(){
 	incrementDays(1);
 	updateAge();
+	checkDeath();
 	checkLifeStatus();
 }
 
@@ -39,20 +40,30 @@ function draw(){
 }
 
 function checkLifeStatus(){
-	if(age == 0){
-		human.lifeStatus = lifeStages.NEW_BORN;
-	}else if(age >= 1){
-		if(age < 3){
-			human.lifeStatus = lifeStages.BABY;
-		}else if(age < 13){
-			human.lifeStatus = lifeStages.CHILD;
-		}else if(age < 20){
-			human.lifeStatus = lifeStages.TEENAGER;
-		}else if(age < 60){
-			human.lifeStatus = lifeStages.ADULT;
-		}else{
-			human.lifeStatus = lifeStates.ELDERLY;
+	if(human.lifeStatus != lifeStages.DEAD){
+		if(age == 0){
+			human.lifeStatus = lifeStages.NEW_BORN;
+		}else if(age >= 1){
+			if(age < 3){
+				human.lifeStatus = lifeStages.BABY;
+			}else if(age < 13){
+				human.lifeStatus = lifeStages.CHILD;
+			}else if(age < 20){
+				human.lifeStatus = lifeStages.TEENAGER;
+			}else if(age < 60){
+				human.lifeStatus = lifeStages.ADULT;
+			}else{
+				human.lifeStatus = lifeStates.ELDERLY;
+			}
 		}
+	}
+}
+
+function checkDeath(){
+	var randomNumber = Math.random() * 100;
+	var chance = 0.001 * (age * 2);
+	if(randomNumber < chance){
+		human.lifeStatus = lifeStages.DEAD;
 	}
 }
 
@@ -70,7 +81,7 @@ function _calculateAge() {
 
 function updateAge(){
 	_calculateAge();
-	displayAge = getAge(beginDate, dateInGame);	
+	displayAge = getAge(human.dateOfBirth, dateInGame);	
 }
 
 function convertDate(inputFormat) {
