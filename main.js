@@ -20,6 +20,10 @@ var lifeStages = {
 	DEAD : "Dead"
 }
 
+$(document).ready(function(){
+	$('#reborn').hide();
+});
+
 window.setInterval(function(){
 	update();
 	draw();
@@ -40,7 +44,10 @@ function draw(){
 }
 
 function checkLifeStatus(){
-	if(human.lifeStatus != lifeStages.DEAD){
+
+	if(human.lifeStatus == lifeStages.DEAD){
+		$('#reborn').show(); // ------------------------------------------------------ TODO
+	}else{
 		if(age == 0){
 			human.lifeStatus = lifeStages.NEW_BORN;
 		}else if(age >= 1){
@@ -61,7 +68,7 @@ function checkLifeStatus(){
 
 function checkDeath(){
 	var randomNumber = Math.random() * 100;
-	var chance = 0.001 * (age * 2);
+	var chance = 0.0001 * (age * 2);
 	if(randomNumber < chance){
 		human.lifeStatus = lifeStages.DEAD;
 	}
