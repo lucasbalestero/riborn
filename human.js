@@ -1,6 +1,6 @@
 class Human{
 	constructor(dateOfBirth){
-		this.dateOfBirth = dateofBirth;
+		this.dateOfBirth = dateOfBirth;
 		this.lifeStatus = this.lifeStatus;
 		this.intelligence = this.intelligence;
 		this.strength = this.strength;

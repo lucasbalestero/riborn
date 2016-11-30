@@ -6,8 +6,10 @@ var beginDate = new Date();
 var age = 0;
 var displayAge;
 var displayDateInGame;
+var displayBeginDate = convertDate(beginDate);
 
-var lifeStatus = "New born";
+var human = new Human(beginDate.getTime());
+
 var lifeStages = {
 	NEW_BORN : "New Born",
 	BABY : "Baby",
@@ -30,25 +32,26 @@ function update(){
 }
 
 function draw(){
+	$('#firstDay').html(displayBeginDate);
 	$('#day').html(displayDateInGame);
 	$('#age').html(displayAge);
-	$('#status').html(lifeStatus);
+	$('#status').html(human.lifeStatus);
 }
 
 function checkLifeStatus(){
 	if(age == 0){
-		lifeStatus = lifeStages.NEW_BORN;
+		human.lifeStatus = lifeStages.NEW_BORN;
 	}else if(age >= 1){
 		if(age < 3){
-			lifeStatus = lifeStages.BABY;
+			human.lifeStatus = lifeStages.BABY;
 		}else if(age < 13){
-			lifeStatus = lifeStages.CHILD;
+			human.lifeStatus = lifeStages.CHILD;
 		}else if(age < 20){
-			lifeStatus = lifeStages.TEENAGER;
+			human.lifeStatus = lifeStages.TEENAGER;
 		}else if(age < 60){
-			lifeStatus = lifeStages.ADULT;
+			human.lifeStatus = lifeStages.ADULT;
 		}else{
-			lifeStatus = lifeStates.ELDERLY;
+			human.lifeStatus = lifeStates.ELDERLY;
 		}
 	}
 }
