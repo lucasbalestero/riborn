@@ -1,5 +1,6 @@
 var days = 0;
-var interval = 1000 * 0.01; // 0.01 sec
+var seconds = 0.01; // Real seconds per game day
+var interval = 1000 * seconds;
 var dateInGame = new Date();
 var beginDate = new Date();
 var age = 0;
