@@ -75,13 +75,13 @@ function checkLifeStatus(){
 
 
 function updateDeadHuman(){
-	deadHuman = new Human(human.dateOfBirth.getTime());
+	deadHuman = new Human(human.dateOfBirth);
 	deadHuman.dateOfDeath = dateInGame;
 	deadHuman.lifeStatus = human.lifeStatus;
 	deadHuman.intelligence = human.intelligence;
 	deadHuman.strength = human.strength;
 	deadHuman.generation = human.generation;
-	deatHuman.deathChance = human.deathChance;
+	deadHuman.deathChance = human.deathChance;
 }
 
 
@@ -97,6 +97,7 @@ function checkDeath(){
 	human.deathChance = 0.0001 * (age * 2);
 	if(randomNumber < human.deathChance){
 		human.lifeStatus = lifeStages.DEAD;
+		human.dateOfDeath = dateInGame;
 	}
 }
 
@@ -106,15 +107,20 @@ function incrementDays(num){
 	displayDateInGame = convertDate(dateInGame);
 }
 
-function _calculateAge() {
-	var ageDifMs = dateInGame - beginDate.getTime();
+function _calculateAge(endDate) {
+	var ageDifMs = endDate - human.dateOfBirth;
 	var ageDate = new Date(ageDifMs);
 	age = Math.abs(ageDate.getUTCFullYear() - 1970);
 }
 
 function updateAge(){
-	_calculateAge();
-	displayAge = getAge(human.dateOfBirth, dateInGame);	
+	if(human.lifeStatus == lifeStages.DEAD){
+		_calculateAge(human.dateOfDeath);
+		displayAge = getAge(human.dateOfBirth, human.dateOfDeath);
+	}else{
+		_calculateAge(dateInGame);
+		displayAge = getAge(human.dateOfBirth, dateInGame);	
+	}
 }
 
 function convertDate(inputFormat) {
