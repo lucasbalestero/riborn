@@ -9,6 +9,7 @@ var displayDateInGame;
 var displayBeginDate = convertDate(beginDate);
 
 var human = new Human(beginDate.getTime());
+var deadHuman = new Human(beginDate.getTime());
 
 var lifeStages = {
 	NEW_BORN : "New Born",
@@ -22,6 +23,11 @@ var lifeStages = {
 
 $(document).ready(function(){
 	$('#reborn').hide();
+
+	$('#reborn').click(function(){
+		
+	});
+
 });
 
 window.setInterval(function(){
@@ -46,7 +52,8 @@ function draw(){
 function checkLifeStatus(){
 
 	if(human.lifeStatus == lifeStages.DEAD){
-		$('#reborn').show(); // ------------------------------------------------------ TODO
+		updateDeadHuman();
+		$('#reborn').show(); 
 	}else{
 		if(age == 0){
 			human.lifeStatus = lifeStages.NEW_BORN;
@@ -66,10 +73,29 @@ function checkLifeStatus(){
 	}
 }
 
+
+function updateDeadHuman(){
+	deadHuman = new Human(human.dateOfBirth.getTime());
+	deadHuman.dateOfDeath = dateInGame;
+	deadHuman.lifeStatus = human.lifeStatus;
+	deadHuman.intelligence = human.intelligence;
+	deadHuman.strength = human.strength;
+	deadHuman.generation = human.generation;
+	deatHuman.deathChance = human.deathChance;
+}
+
+
+function createNewHuman(){
+	human = new Human(dateInGame.getTime(), deadHuman.generation + 1);
+	human.intelligence = deadHuman.intelligence / 3;
+	human.strength = deadHuman.strength / 3;
+}
+
+
 function checkDeath(){
 	var randomNumber = Math.random() * 100;
-	var chance = 0.0001 * (age * 2);
-	if(randomNumber < chance){
+	human.deathChance = 0.0001 * (age * 2);
+	if(randomNumber < human.deathChance){
 		human.lifeStatus = lifeStages.DEAD;
 	}
 }
