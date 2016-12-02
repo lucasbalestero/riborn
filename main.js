@@ -104,8 +104,8 @@ function updateDeadHuman(){
 
 function createNewHuman(){
 	human = new Human(dateInGame.getTime(), deadHuman.generation + 1);
-	human.intelligence = deadHuman.intelligence / 3;
-	human.strength = deadHuman.strength / 3;
+
+	genericHumanStatus = new Task(genericHumanStatus.description, intperday=(deadHuman.intelligence / 1000), strperday=(deadHuman.strength / 1000));
 
 	displayDateOfBirth = convertDate(human.dateOfBirth);
 }
@@ -121,8 +121,10 @@ function checkDeath(){
 }
 
 function updateStats(){
-	updateIntelligence();
-	updateStrength();
+	if(human.lifeStatus != lifeStages.DEAD){
+		updateIntelligence();
+		updateStrength();
+	}
 }
 
 
