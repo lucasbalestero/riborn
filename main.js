@@ -1,9 +1,12 @@
 var days = 0;
 var seconds = 0.001; // Real seconds per game day
 var interval = 1000 * seconds;
+
 var dateInGame = new Date();
 var beginDate = new Date();
+
 var age = 0;
+
 var displayAge;
 var displayDateInGame;
 var displayBeginDate = convertDate(beginDate);
@@ -11,6 +14,9 @@ var displayDateOfBirth;
 
 var human = new Human(beginDate.getTime());
 var deadHuman = new Human(beginDate.getTime());
+
+var genericHumanStatus = new Task("Natural Status", strperday=0.001, intperday=0.001);
+
 
 displayDateOfBirth = convertDate(human.dateOfBirth);
 
@@ -44,6 +50,7 @@ window.setInterval(function(){
 function update(){
 	incrementDays(1);
 	updateAge();
+	updateStats();
 	checkDeath();
 	checkLifeStatus();
 }
@@ -55,6 +62,8 @@ function draw(){
 	$('#status').html(human.lifeStatus);
 	$('#generation').html(human.generation);
 	$('#dateOfBirth').html(displayDateOfBirth);
+	$('#intelligence').html(human.intelligence.toFixed(2));
+	$('#strength').html(human.strength.toFixed(2));
 }
 
 function checkLifeStatus(){
@@ -104,12 +113,28 @@ function createNewHuman(){
 
 function checkDeath(){
 	var randomNumber = Math.random() * 100;
-	human.deathChance = 0.0000005 * (age * 155);
+	human.deathChance = 0.00001 * (age * 7);
 	if(randomNumber < human.deathChance){
 		human.lifeStatus = lifeStages.DEAD;
 		human.dateOfDeath = dateInGame;
 	}
 }
+
+function updateStats(){
+	updateIntelligence();
+	updateStrength();
+}
+
+
+function updateIntelligence(){
+	human.intelligence += genericHumanStatus.intperday;
+}
+
+
+function updateStrength(){
+	human.strength += genericHumanStatus.strperday;
+}
+
 
 function incrementDays(num){
 	days += num;
